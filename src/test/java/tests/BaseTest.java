@@ -11,6 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import utils.ExtentReport;
+import utils.PropertiesLoader;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -33,14 +34,14 @@ public class BaseTest {
     public void setUp() throws MalformedURLException {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UIAutomator2" );
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android" );
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "test_device" );
-        capabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS,true);
-        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE,"com.phptravelsnative");
-        capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,"com.phptravelsnative.Activities.SplashActivity");
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, PropertiesLoader.loadProperty("automation.name") );
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, PropertiesLoader.loadProperty("platform.name") );
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, PropertiesLoader.loadProperty("device.name") );
+        capabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, PropertiesLoader.loadProperty("auto.grant.permissions"));
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, PropertiesLoader.loadProperty("app.package"));
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, PropertiesLoader.loadProperty("app.activity"));
 
-        driver = new AndroidDriver(new URL("http://127.0.0.1:4723/"), capabilities);
+        driver = new AndroidDriver(new URL(PropertiesLoader.loadProperty("appium.url")), capabilities);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
     }
