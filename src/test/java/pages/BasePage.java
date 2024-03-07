@@ -1,55 +1,66 @@
 package pages;
 
-import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.touch.offset.PointOption;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
 import utils.ExtentReport;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static io.appium.java_client.touch.offset.PointOption.point;
-import static java.sql.DriverManager.getDriver;
 import static tests.BaseTest.driver;
 
 public class BasePage {
 
     private static Point point;
 
-    public void clickElement(WebElement element, String elementName){
+    public void clickElement(WebElement element, String elementName) {
         try {
             element.click();
             ExtentReport.pass("Click on " + elementName + " passed");
-        } catch (Exception e) {
+        } catch (Exception | AssertionError e) {
             ExtentReport.fail("Click on " + elementName + " failed");
+            throw e;
         }
     }
 
-    public void elementDisplayed(WebElement element, String elementName){
+    public void elementDisplayed(WebElement element, String elementName) {
         try {
             Assert.assertTrue(element.isDisplayed());
             ExtentReport.pass("Checking display of " + elementName + " passed");
-        } catch (Exception e) {
+        } catch (AssertionError e) {
             ExtentReport.fail("Checking display of " + elementName + " failed");
+            throw e;
         }
     }
 
-    public void elementDisplayed(List<WebElement> listElement, int numberOfElements, String listElementName ){
+    public void elementDisplayed(List<WebElement> listElement, int numberOfElements, String listElementName) {
         try {
-            Assert.assertEquals(listElement.size(), numberOfElements);
+            SoftAssert softAssert = new SoftAssert();
+            softAssert.assertEquals(listElement.size(), numberOfElements);
             ExtentReport.pass("Checking display of " + listElementName + " passed");
-        } catch (Exception e) {
-            ExtentReport.fail("Checking display of " + listElementName + " failed");
+        } catch (AssertionError e) {
+            ExtentReport.fail("Checking display of " + listElementName + " failed: " + e.getMessage());
+            throw e;
         }
     }
 
-    public void selectDateInCalendar(String day, List<WebElement> calendarDayList){
+    public void elementSendKeys(WebElement element, String sendPhrase, String elementName) {
+        try {
+            element.sendKeys(sendPhrase);
+            ExtentReport.pass("Sending keys to " + elementName + " passed");
+        } catch (Exception | AssertionError e) {
+            ExtentReport.fail("Sending keys to " + elementName + " failed");
+            throw e;
+        }
+    }
+
+
+    public void selectDateInCalendar(String day, List<WebElement> calendarDayList) {
         for (WebElement element : calendarDayList) {
             if (element.getText().equals(day)) {
                 element.click();
@@ -57,7 +68,7 @@ public class BasePage {
         }
     }
 
-    public void selectDateInCalendar(String dayFrom, String dayTo,  List<WebElement> calendarDayList){
+    public void selectDateInCalendar(String dayFrom, String dayTo, List<WebElement> calendarDayList) {
         for (WebElement element : calendarDayList) {
             if (element.getText().equals(dayFrom)) {
                 element.click();
@@ -72,7 +83,43 @@ public class BasePage {
         }
     }
 
-    public void compareElements(WebElement elementToCompare, String stringToCompare, String message){
+    public void acceptAlert(String alertName) {
+        try {
+            Thread.sleep(3000);
+            Alert alert = driver.switchTo().alert();
+            alert.accept();
+            ExtentReport.pass("Accepting " + alertName + " alert passed");
+        } catch (Exception | AssertionError e) {
+            ExtentReport.fail("Accepting " + alertName + " alert failed");
+            try {
+                throw e;
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
+    public void checkAlertText(String alertName, String alertText) {
+        try {
+            Thread.sleep(3000);
+            Alert alert = driver.switchTo().alert();
+            Assert.assertTrue(alert.getText().contains(alertText));
+            ExtentReport.pass("Checking if " + alertName + " is having '" + alertText + "' text passed");
+        } catch (Exception | AssertionError e) {
+            ExtentReport.fail("Checking if " + alertName + " is having '" + alertText + "' text failed");
+            try {
+                throw e;
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
+    public void navigateBack() {
+        driver.navigate().back();
+    }
+
+    public void compareElements(WebElement elementToCompare, String stringToCompare, String message) {
         try {
             Assert.assertTrue(elementToCompare.isDisplayed());
             Assert.assertEquals(elementToCompare.getText(), stringToCompare);
@@ -82,17 +129,21 @@ public class BasePage {
         }
     }
 
-    public MobileElement scrollToElement(String locator){
-        String selector = "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().textContains(\""+locator+"\").instance(0))";
+    public String randomEmail() {
+        return "tester" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("ddMMyyyHHmmss")) + "@tester.com";
+    }
+
+    public MobileElement scrollToElement(String locator) {
+        String selector = "new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().textContains(\"" + locator + "\").instance(0))";
         return (MobileElement) driver.findElementByAndroidUIAutomator(selector);
     }
 
-    public MobileElement scrollForward(){
+    public MobileElement scrollForward() {
         String selector = "new UiScrollable(new UiSelector().scrollable(true)).scrollForward()";
         return (MobileElement) driver.findElementByAndroidUIAutomator(selector);
     }
 
-    public MobileElement scrollBackward(){
+    public MobileElement scrollBackward() {
         String selector = "new UiScrollable(new UiSelector().scrollable(true)).scrollBackward()";
         return (MobileElement) driver.findElementByAndroidUIAutomator(selector);
     }

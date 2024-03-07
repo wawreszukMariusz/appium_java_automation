@@ -8,12 +8,13 @@ import pages.HomePage;
 import pages.SearchFlightResultPage;
 import utils.ExtentReport;
 
-public class CheckFlightsTest extends BaseTest{
+public class CheckFlightsTest extends BaseTest {
 
     HomePage homePage;
     FlightsModalPage flightsModalPage;
+
     @BeforeMethod
-    public void beforeTest(ITestResult result){
+    public void beforeTest(ITestResult result) {
         ExtentReport.createTest(result.getMethod().getMethodName());
 
         homePage = new HomePage(driver);
@@ -25,7 +26,7 @@ public class CheckFlightsTest extends BaseTest{
     }
 
     @Test
-    public void findFlightForOnePersonTest(){
+    public void findFlightForOnePersonTest() {
         flightsModalPage.clickOriginDropdown();
         flightsModalPage.clickFlightOption(0);
 
@@ -46,31 +47,7 @@ public class CheckFlightsTest extends BaseTest{
     }
 
     @Test
-    public void findFlightsForCouple(){
-        flightsModalPage.clickOriginDropdown();
-        flightsModalPage.clickFlightOption(0);
-
-        String fromCountryIso = flightsModalPage.getFromCountryCode();
-
-        flightsModalPage.clickDestinationDropdown();
-        flightsModalPage.clickFlightOption(0);
-
-        String toCountryIso = flightsModalPage.getToCountryCode();
-
-        flightsModalPage.clickDepartureDateDropdown();
-        flightsModalPage.selectDate("26");
-        flightsModalPage.clickCalendarOkButton();
-        flightsModalPage.clickSetTravellersDropDown();
-        flightsModalPage.setNumberOfAdult(2);
-        flightsModalPage.clickSaveTravellersButton();
-        flightsModalPage.clickSearchFlightButton();
-
-        SearchFlightResultPage searchFlightResultPage = new SearchFlightResultPage(driver);
-        searchFlightResultPage.screenDisplayed(fromCountryIso, toCountryIso);
-    }
-
-    @Test
-    public void findFlightsForOneChildFamily(){
+    public void findFlightsForCouple() {
         flightsModalPage.clickOriginDropdown();
         flightsModalPage.clickFlightOption(0);
 
@@ -94,7 +71,31 @@ public class CheckFlightsTest extends BaseTest{
     }
 
     @Test
-    public void findFlightsForTwoChildFamily(){
+    public void findFlightsForOneChildFamily() {
+        flightsModalPage.clickOriginDropdown();
+        flightsModalPage.clickFlightOption(0);
+
+        String fromCountryIso = flightsModalPage.getFromCountryCode();
+
+        flightsModalPage.clickDestinationDropdown();
+        flightsModalPage.clickFlightOption(0);
+
+        String toCountryIso = flightsModalPage.getToCountryCode();
+
+        flightsModalPage.clickDepartureDateDropdown();
+        flightsModalPage.selectDate("26");
+        flightsModalPage.clickCalendarOkButton();
+        flightsModalPage.clickSetTravellersDropDown();
+        flightsModalPage.setNumberOfAdult(2);
+        flightsModalPage.clickSaveTravellersButton();
+        flightsModalPage.clickSearchFlightButton();
+
+        SearchFlightResultPage searchFlightResultPage = new SearchFlightResultPage(driver);
+        searchFlightResultPage.screenDisplayed(fromCountryIso, toCountryIso);
+    }
+
+    @Test
+    public void findFlightsForTwoChildFamily() {
         flightsModalPage.clickOriginDropdown();
         flightsModalPage.clickFlightOption(0);
 
@@ -119,7 +120,7 @@ public class CheckFlightsTest extends BaseTest{
     }
 
     @Test
-    public void flightsNotFoundTest(){
+    public void flightsNotFoundTest() {
         flightsModalPage.clickOriginDropdown();
         flightsModalPage.clickFlightOption(0);
 

@@ -4,6 +4,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -20,7 +21,7 @@ public class BaseTest {
     public static AndroidDriver driver;
 
     @BeforeSuite
-    public void beforeSuite(){
+    public void beforeSuite() {
         ExtentReport.initReports();
     }
 
@@ -28,9 +29,9 @@ public class BaseTest {
     public void setUp() throws MalformedURLException {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, PropertiesLoader.loadProperty("automation.name") );
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, PropertiesLoader.loadProperty("platform.name") );
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, PropertiesLoader.loadProperty("device.name") );
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, PropertiesLoader.loadProperty("automation.name"));
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, PropertiesLoader.loadProperty("platform.name"));
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, PropertiesLoader.loadProperty("device.name"));
         capabilities.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, PropertiesLoader.loadProperty("auto.grant.permissions"));
         capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, PropertiesLoader.loadProperty("app.package"));
         capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, PropertiesLoader.loadProperty("app.activity"));
@@ -40,8 +41,13 @@ public class BaseTest {
 
     }
 
+    @AfterMethod
+    public void tearDown() {
+        //driver.quit();
+    }
+
     @AfterSuite
-    public void afterSuite(){
+    public void afterSuite() {
         ExtentReport.flushReports();
     }
 

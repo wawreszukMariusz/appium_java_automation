@@ -63,85 +63,87 @@ public class FlightsModalPage extends BasePage {
     @FindBy(id = "btnSaveTravller")
     private WebElement saveTravellersButton;
 
-    public FlightsModalPage(AndroidDriver driver){
+    public FlightsModalPage(AndroidDriver driver) {
         PageFactory.initElements(driver, this);
     }
 
-    public void clickOriginDropdown(){
+    public void clickOriginDropdown() {
         clickElement(this.originDropdown, "origin dropdown");
     }
 
-    public void clickDestinationDropdown(){
+    public void clickDestinationDropdown() {
         clickElement(this.destinationDropdown, "destination dropdown");
     }
 
-    public void clickDepartureDateDropdown(){
+    public void clickDepartureDateDropdown() {
         clickElement(this.departureDateDropdown, "departure date dropdown");
     }
 
-    public void clickFlightOption(int option){
+    public void clickFlightOption(int option) {
         clickElement(this.flightOptionList.get(option), "flight option");
     }
 
-    public void clickCalendarOkButton(){
+    public void clickCalendarOkButton() {
         clickElement(this.calendarOkButton, "calendar ok button");
     }
 
-    public void clickSearchFlightButton(){
+    public void clickSearchFlightButton() {
         clickElement(this.searchFlightButton, "search flight button");
     }
 
-    public void clickSetTravellersDropDown(){
+    public void clickSetTravellersDropDown() {
         clickElement(this.setTravellersDropdown, "set travellers dropdown");
     }
-    public void clickReturnDateDropdown(){
+
+    public void clickReturnDateDropdown() {
         clickElement(this.returnDateDropdown, "click return date dropdown");
     }
 
-    public void clickSaveTravellersButton(){
+    public void clickSaveTravellersButton() {
         clickElement(this.saveTravellersButton, "save travellers button");
     }
 
-    public void clickRoundTripFlightOptionButton(){
+    public void clickRoundTripFlightOptionButton() {
         clickElement(this.roundTripFlightOptionButton, "round trip flight option button");
     }
 
-    public void flightModalTitleDisplayed(){
+    public void flightModalTitleDisplayed() {
         elementDisplayed(this.flightsModalTitle, "flight modal title");
     }
 
-    public void oneWayFlightOptionButtonDisplayed(){
+    public void oneWayFlightOptionButtonDisplayed() {
         elementDisplayed(this.oneWayFlightOptionButton, "one way flight option button");
     }
-    public void roundTripFlightOptionButtonDisplayed(){
+
+    public void roundTripFlightOptionButtonDisplayed() {
         elementDisplayed(this.roundTripFlightOptionButton, "round trip flight option button");
     }
 
-    public void originDropdownDisplayed(){
+    public void originDropdownDisplayed() {
         elementDisplayed(this.originDropdown, "origin dropdown");
     }
 
-    public void destinationDropdownDisplayed(){
+    public void destinationDropdownDisplayed() {
         elementDisplayed(this.destinationDropdown, "destination dropdown");
     }
 
-    public void departureDateDropdownDisplayed(){
+    public void departureDateDropdownDisplayed() {
         elementDisplayed(this.departureDateDropdown, "departure date dropdown");
     }
 
-    public void selectClassDropdownDisplayed(){
+    public void selectClassDropdownDisplayed() {
         elementDisplayed(this.selectClassDropdown, "select class dropdown");
     }
 
-    public void setTravellersDropdownDisplayed(){
+    public void setTravellersDropdownDisplayed() {
         elementDisplayed(this.setTravellersDropdown, "set travellers dropdown");
     }
 
-    public void searchFlightButtonDisplayed(){
+    public void searchFlightButtonDisplayed() {
         elementDisplayed(this.searchFlightButton, "search flight button");
     }
 
-    public void selectDate(String day){
+    public void selectDate(String day) {
         for (WebElement element : this.calendarDaysList) {
             if (element.getText().equals(day)) {
                 element.click();
@@ -149,7 +151,7 @@ public class FlightsModalPage extends BasePage {
         }
     }
 
-    public void selectDate(String dayFrom, String dayTo){
+    public void selectDate(String dayFrom, String dayTo) {
         for (WebElement element : this.calendarDaysList) {
             if (element.getText().equals(dayFrom)) {
                 element.click();
@@ -164,8 +166,8 @@ public class FlightsModalPage extends BasePage {
         }
     }
 
-    public void setNumberOfAdult(int numberOfAdult){
-        for(int i=2; i<=numberOfAdult; i++) {
+    public void setNumberOfAdult(int numberOfAdult) {
+        for (int i = 2; i <= numberOfAdult; i++) {
             for (WebElement element : adultNumberChooserList) {
                 if (element.getText().equals(String.valueOf(i))) {
                     clickElement(element, numberOfAdult + "adults option");
@@ -174,8 +176,8 @@ public class FlightsModalPage extends BasePage {
         }
     }
 
-    public void setNumberOfChild(int numberOfChild){
-        for(int i=1; i<=numberOfChild; i++) {
+    public void setNumberOfChild(int numberOfChild) {
+        for (int i = 1; i <= numberOfChild; i++) {
             for (WebElement element : childNumberChooserList) {
                 if (element.getText().equals(String.valueOf(i))) {
                     clickElement(element, numberOfChild + "child option");
@@ -184,15 +186,15 @@ public class FlightsModalPage extends BasePage {
         }
     }
 
-    public String getFromCountryCode(){
+    public String getFromCountryCode() {
         return this.fromCountryCode.getText();
     }
 
-    public String getToCountryCode(){
+    public String getToCountryCode() {
         return this.toCountryCode.getText();
     }
 
-    public void modalDisplayed(){
+    public void modalDisplayed() {
         this.searchFlightButtonDisplayed();
         this.setTravellersDropdownDisplayed();
         this.selectClassDropdownDisplayed();
