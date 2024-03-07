@@ -50,6 +50,4 @@ public class BaseTest {
     public void afterSuite() {
         ExtentReport.flushReports();
     }
-
-
 }

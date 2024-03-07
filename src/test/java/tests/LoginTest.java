@@ -33,4 +33,32 @@ public class LoginTest extends BaseTest {
         loginPage.clickLoginButton();
         loginPage.checkNotVerifiedAccountAlertText();
     }
+
+    @Test
+    public void emptyLoginFormDataTest() {
+        loginPage.clickLoginButton();
+        loginPage.screenDisplayed();
+    }
+
+    @Test
+    public void incorrectEmailLoginTest() {
+        loginPage.emailInputSendKeys("test");
+        loginPage.passwordInputSendKeys(PropertiesLoader.loadProperty("account.password"));
+        loginPage.clickLoginButton();
+        loginPage.screenDisplayed();
+    }
+
+    @Test
+    public void incorrectPasswordLoginTest() {
+        loginPage.emailInputSendKeys(PropertiesLoader.loadProperty("account.login"));
+        loginPage.passwordInputSendKeys("123");
+        loginPage.clickLoginButton();
+        loginPage.checkAccountNotFoundAlertText();
+    }
+
+    @Test
+    public void exitLoginScreenTest() {
+        loginPage.navigateBack();
+        homePage.screenDisplayed();
+    }
 }

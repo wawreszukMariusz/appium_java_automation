@@ -77,6 +77,9 @@ public class LoginPage extends BasePage {
         checkAlertText("not verified account", "user account not verified");
     }
 
+    public void checkAccountNotFoundAlertText() {
+        checkAlertText("account not found", "no user found");
+    }
 
     public void screenDisplayed() {
         this.emailInputDisplayed();
@@ -86,5 +89,4 @@ public class LoginPage extends BasePage {
         this.resetPasswordLinkDisplayed();
         this.showPasswordEyeDisplayed();
     }
-
 }

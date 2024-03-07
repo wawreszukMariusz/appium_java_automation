@@ -104,9 +104,9 @@ public class BasePage {
             Thread.sleep(3000);
             Alert alert = driver.switchTo().alert();
             Assert.assertTrue(alert.getText().contains(alertText));
-            ExtentReport.pass("Checking if " + alertName + " is having '" + alertText + "' text passed");
+            ExtentReport.pass("Checking if " + alertName + " alert is having '" + alertText + "' text passed");
         } catch (Exception | AssertionError e) {
-            ExtentReport.fail("Checking if " + alertName + " is having '" + alertText + "' text failed");
+            ExtentReport.fail("Checking if " + alertName + " alert is having '" + alertText + "' text failed");
             try {
                 throw e;
             } catch (InterruptedException ex) {
